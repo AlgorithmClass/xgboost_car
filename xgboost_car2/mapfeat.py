@@ -4,18 +4,29 @@ python3
 '''
 import pandas as pd
 
-#训练集
-def get_train_data():
-    train_csv=pd.read_csv("train.csv")
-    train_csv=train_csv.drop('Id',axis=1)
+def xg_data(data_csv):
+    '''
+    用于生成xgboost可使用的数据格式
+    '''
     columns=[]
-    for col in train_csv:
-        if str(train_csv[col][0])[0].isalpha():
-            t=pd.get_dummies(train_csv[col])
+    for col in data_csv:
+        if str(data_csv[col][0])[0].isalpha():
+            t=pd.get_dummies(data_csv[col])
             columns.append(t)
-        else: columns.append(train_csv[col])
-    train_cat=pd.concat(columns,axis=1)
-    return train_cat
+        else: columns.append(data_csv[col])
+    return pd.concat(columns,axis=1) #将列拼接在一起
+
+
+def get_data():
+    '''
+    对训练集和测试集进行处理并返回所需格式
+    '''
+    train_csv=pd.read_csv("train.csv")
+    test_csv=pd.read_csv("test.csv")
+    train_csv=train_csv.drop('Id',axis=1)
+    train_cat=xg_data(train_csv)
+    test_cat=xg_data(test_csv)
+    return train_cat,test_cat
 
 
 
