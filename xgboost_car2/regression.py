@@ -238,7 +238,7 @@ print('\n平均rmse:',rmse_cross.sum()/num_fold)
 #预测结果：
 test_results=np.array(test_results).sum(axis=0)/len(test_results)
 #print(test_results)
-test_results=test_results.round().astype(int)
+#test_results=test_results.round().astype(int)
 #print(test_results)
 #input()
 Test_Results=pd.DataFrame({"Id":id_test,"Score":test_results})
